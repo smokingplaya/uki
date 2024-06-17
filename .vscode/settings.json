@@ -1,0 +1,11 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.vscode": true,
+        "**/target": true,
+        "**/.gitignore": true,
+        "**/Cargo.lock": true,
+        "**/README.md": true,
+        "**/config.yml.example": true,
+    }
+}

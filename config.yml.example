@@ -1,0 +1,10 @@
+name: uki build script
+description: builds uki
+authors: ["smokingplaya"]
+runner: powershell
+
+presets:
+  default:
+    arguments: ["name"]
+    execute:
+    - npm run $name
