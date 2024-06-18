@@ -24,7 +24,7 @@ fn main() {
     commands::register(&mut commands); // haha wtf hows it work
 
     let mut args = env::args().collect::<Arguments>();
-    args.remove(0); // removin this
+    args.remove(0);
 
     let default_preset = DEFAULT_PRESET.to_string();
     let command = args.get(0).unwrap_or(&default_preset).clone();
