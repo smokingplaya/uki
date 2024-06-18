@@ -3,7 +3,7 @@ name = "uki"
 repository = "https://github.com/smokingplaya/uki"
 description = "Allows you to run pre-prepared commands"
 authors = ["smokingplaya"]
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 
 [dependencies]

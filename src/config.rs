@@ -124,7 +124,7 @@ uWu {}", "uki".accent(), runner.accent(), "^-^".accent())
                                 i += 1;
                             });
                         },
-                        None => return
+                        None => {}
                     }
 
                     preset.execute.clone()
