@@ -87,6 +87,6 @@ uki list
 # Contributing
 We welcome contributors! To contribute, create a pull request in the repository. Please ensure that your code adheres to good coding standards and is tested.
 
-# Лицензия
+# License
 uki is distributed under the GNU GPL v3.0 license. \
 Details can be found in the [LICENSE](LICENSE) file.
