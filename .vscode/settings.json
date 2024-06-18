@@ -1,8 +1,0 @@
-{
-    "files.exclude": {
-        "**/.git": true,
-        "**/.vscode": true,
-        "**/target": true,
-        "**/README.md": true,
-    }
-}
