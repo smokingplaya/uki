@@ -89,7 +89,7 @@ fn handle_command(runner: String, cmd: String, args: PreparedArguments) {
         .stdout(Stdio::inherit())
         .stderr(Stdio::inherit())
         .args([arg, &command])
-        .output();
+        .status();
 }
 
 pub fn preset(command: String, args: Arguments) {
@@ -131,7 +131,7 @@ uWu {}", "uki".accent(), runner.accent(), "^-^".accent())
                         .into_iter()
                         .for_each(|command| handle_command(runner.clone(), command, prepared_args.clone()));
                 },
-                None => return println!("Command {} doesn't exists!", command.accent())
+                None => return println!("Preset {} doesn't exists!", command.accent())
             }
 
         },
