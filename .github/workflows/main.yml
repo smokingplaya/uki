@@ -51,9 +51,7 @@ jobs:
       - name: Rename executable for Windows
         if: matrix.os == 'windows-latest'
         run: |
-          $sourcePath = Join-Path -Path "target\release" -ChildPath $env:EXE_NAME
-          $destinationPath = Join-Path -Path "target\release" -ChildPath $env:OUTPUT_NAME
-          Rename-Item -Path $sourcePath -NewName $destinationPath
+          Rename-Item -Path "target\release\$($env:EXE_NAME)" -NewName $($env:OUTPUT_NAME)
         shell: pwsh
 
       - name: Create Release
