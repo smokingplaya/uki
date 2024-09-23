@@ -7,7 +7,7 @@ if (-Not (Test-Path -Path $folderPath)) {
 }
 
 # downloading file
-$exeUrl = "https://github.com/smokingplaya/uki/releases/latest/download/uki-windows_x86.exe"
+$exeUrl = "https://github.com/smokingplaya/uki/releases/latest/download/uki-win_x86.exe"
 $exePath = Join-Path -Path $folderPath -ChildPath "uki.exe"
 Invoke-WebRequest -Uri $exeUrl -OutFile $exePath
 
