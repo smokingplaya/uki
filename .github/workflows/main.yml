@@ -43,6 +43,11 @@ jobs:
           mv target/release/${{ env.EXE_NAME }} target/release/${{ env.OUTPUT_NAME }}
         shell: bash
 
+      - name: Check for executable
+        if: matrix.os == 'windows-latest'
+        run: Get-ChildItem target\release\
+        shell: pwsh
+
       - name: Rename executable for Windows
         if: matrix.os == 'windows-latest'
         run: |
