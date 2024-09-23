@@ -1,0 +1,44 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          override-file: cargo.toml
+
+      - name: Build
+        run: cargo build --release
+
+      - name: Set executable name
+        id: set_name
+        run: |
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            echo "EXE_NAME=uki.exe" >> $GITHUB_ENV
+          else
+            echo "EXE_NAME=uki" >> $GITHUB_ENV
+          fi
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            target/release/${{ env.EXE_NAME }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
