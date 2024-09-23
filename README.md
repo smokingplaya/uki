@@ -13,8 +13,7 @@
   sudo mv uki /usr/local/bin
   chmod +x /usr/local/bin/uki
   ```
-* Windows (powershell)\
-  *Not tested on windows yet, do it on your own risk*
+* Windows (powershell w/ admin rights)
   ```powershell
   & {Invoke-WebRequest -Uri "https://raw.githubusercontent.com/smokingplaya/uki/refs/heads/master/misc/windows.ps1" -OutFile "$env:USERPROFILE\Downloads\install_uki.ps1"; & "$env:USERPROFILE\Downloads\install_uki.ps1"}
   ```
