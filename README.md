@@ -11,6 +11,7 @@
   sudo apt update && sudo apt upgrade
   wget https://github.com/smokingplaya/uki/releases/latest/download/uki-linux_x86 -O uki
   sudo mv uki /usr/local/bin
+  chmod +x /usr/local/bin/uki
   ```
 * Windows (powershell)\
   *Not tested on windows yet, do it on your own risk*
