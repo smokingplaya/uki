@@ -1,14 +1,11 @@
 [package]
 name = "uki"
-repository = "https://github.com/smokingplaya/uki"
-description = "Allows you to run pre-prepared commands"
 authors = ["smokingplaya"]
-version = "0.1.2"
+repository = "https://github.com/smokingplaya/uki"
+version = "0.2.0"
 edition = "2021"
 
 [dependencies]
-clap = "4.5.7"
-colored = "2.1.0"
-lazy_static = "1.4.0"
-serde = {version = "1.0.203", features = ["derive"]}
-serde_yaml = "0.9.34"
+anyhow = "1.0.89"
+serde = {version = "1.0.210", features = ["derive"]}
+serde_yml = "0.0.12"

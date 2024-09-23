@@ -1,0 +1,22 @@
+# example uki configuration
+
+default-enviroment: bash
+
+presets:
+  # default preset
+  default:
+    enviroment: bash
+    description: Example description
+    arguments:
+      - name: arg1
+        default: "Default example argument"
+      - name: arg2
+        default: "What's up"
+    commands:
+    - echo "${arg1}"
+    - echo "${arg2}"
+
+  # uki my_custom_preset
+  my_custom_preset:
+    commands:
+    - echo "Hi"

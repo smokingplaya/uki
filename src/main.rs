@@ -1,43 +1,46 @@
-use std::{collections::HashMap, env};
+/**
+ * uki
+ * created by smokingplaya 2024
+ *
+ * uki 0.2
+ * changes:
+ *  rewrited code and becomes clearly
+ *  now we using serde_yml
+ *  now yml-config file doesn't requires separate folder, it just uses .uki file in cwd
+ *  yml-config file changed structure, now its more like to smokingplaya/runny file structure
+ *  added command history; now you can works with cd/pwd etc.
+ */
 
-mod config;
-mod commands;
+pub(crate) mod configuration;
+pub(crate) mod argument;
+pub(crate) mod preset;
 
-pub const UKI_FOLDER: &'static str = ".uki";
-const DEFAULT_PRESET: &'static str = "default";
+/**
+ * execute
+ * * Executes configuration file
+ */
+pub(crate) fn execute(
+  arguments: &Vec<String>
+) -> anyhow::Result<()> {
+  let mut cli_arguments = arguments.clone();
 
-/*
-    Commands
-*/
+  if cli_arguments.len() > 0 {
+    cli_arguments.remove(0);
+  }
 
-type Arguments = Vec<String>;
-type PreparedArguments = HashMap<String, String>;
-type CommandFunc = fn(Arguments);
-pub type CommandMap = HashMap<&'static str, CommandFunc>;
+  configuration::new()?
+    .run_preset(
+      cli_arguments,
+      arguments.get(0).cloned()
+    )
+}
 
-/*
-    Main function / Entry point
-*/
+fn main() -> anyhow::Result<()> {
+  let mut arguments = std::env::args()
+    .collect::<Vec<String>>();
 
-fn main() {
-    let mut commands: CommandMap = HashMap::new();
-    commands::register(&mut commands); // haha wtf hows it work
+  // removing path to program
+  arguments.remove(0);
 
-    let mut args = env::args().collect::<Arguments>();
-    args.remove(0);
-
-    let default_preset = DEFAULT_PRESET.to_string();
-    let command = args.get(0).unwrap_or(&default_preset).clone();
-
-    // yeah babe
-    if args.len() > 0 {
-        args.remove(0);
-    }
-
-    let action = commands.get(command.clone().as_str());
-
-    match action {
-        Some(callback) => callback(args),
-        None => config::preset(command.to_owned(), args),
-    }
+  execute(&arguments)
 }

@@ -1,92 +1,120 @@
-<p align="center">
-  <img src=".uki/logo.png">
-</p>
+![shi](misc/logo.png)
+# uki
 
-<p align="center">
-<img src="https://img.shields.io/badge/Powered By Rust-e43717?style=for-the-badge&logo=rust&logoColor=white">
-</p>
+**uki** is a utility for running predefined commands in various shells on your system through a simple YAML configuration. It allows you to customize commands for frequent use and run them through a single call.
 
-# **uki**
-**uki** is a utility for automating the execution of pre-configured commands and scripts, set up through YAML configurations. This tool is useful for unifying and simplifying the execution of frequently used commands across various workspaces.
+## Installing
+* Linux
+  - Debian-based:
+  ```bash
+  # updating dependencies
+  sudo apt update && sudo apt upgrade
+  wget https://github.com/smokingplaya/uki/releases/latest/download/uki-linux_x86 -O uki
+  sudo mv uki /usr/local/bin
+  ```
+* Windows (powershell)\
+  *Not tested on windows yet, do it on your own risk*
+  ```powershell
+  & {Invoke-WebRequest -Uri "https://raw.githubusercontent.com/smokingplaya/uki/refs/heads/master/misc/windows.ps1" -OutFile "$env:USERPROFILE\Downloads\install_uki.ps1"; & "$env:USERPROFILE\Downloads\install_uki.ps1"}
+  ```
 
-# Features
-* Simple configuration through YAML files.
-* Support for different interpreters: cmd, bash, zsh, powershell.
-* Flexibility in command configuration with the use of arguments and presets.
-* Universal usage across different workspaces.
+## Using
 
-# Installation
-To install uki, use [winget](https://github.com/microsoft/winget-cli):
-
-```sh
-winget install uki
+```bash
+uki <preset> <аргументы>
 ```
 
-# Configuration
-The configuration file for each workspace is located at **{workspace}/.uki/config.yml**. Example structure of the file:
+- **preset** is the name of the preset (a set of pre-prepared commands) to be run. If you do not specify a preset, the `default` preset will be used by default.
+- **arguments** are the parameters that are passed to the preset commands.
+
+### Examples:
+
+1. Run the `default` preset (no arguments):
+    ```bash
+    uki
+    ```
+2. Run the `example` preset with the argument “hello, there”:
+    ```bash
+    uki example "hello, there"
+    ```
+3. Run the `default` preset with arguments passed:
+    ```bash
+    uki default arg1 arg2
+    ```
+
+## Configuration
+
+For **uki** to work, there must be a YAML configuration file called `.uki` in the current directory.
+
+### Example of `.uki` file structure:
 
 ```yaml
-name: example # Configuration name
-description: lorem ipsum... # (optional) Configuration description
-authors: ["author1", "author2"]
-runner: powershell # Possible values: cmd, bash, zsh, powershell
+default-enviroment: bash # Default shell for all presets (optional)
+default-preset: default # Default preset if not specified (optional)
 
+# Presets section (required)
 presets:
-   default:
-      execute:
-      - ls
-      - echo "uki is the best!"
-   test:
-      arguments: ["test", "my_name"]
-      execute:
-      - echo "$test"
-      - echo "My name: $my_name"
+  # Preset name
+  default:
+    enviroment: bash        # Shell override for a specific preset (optional)
+    description: "Пресет, который ничего не делает"  # Preset description (optional)
+    arguments:
+      - name: arg1          # Name of the argument
+        default: ""         # Default value for the argument (optional)
+    commands:               # Command list (required)
+      - echo "${arg1}"      # Example of a command using the argument
 ```
 
-# Configuration Fields
-* **name**: Configuration name.
-* **description**: (optional) Configuration description.
-* **authors**: List of configuration authors.
-* **runner**: Command interpreter. Possible values: cmd, bash, zsh, powershell.
-* **presets**: List of command presets.
+### Supported shells:
 
-## Presets
-Presets allow you to define a set of commands for execution. Each preset can contain:
+- `bash`
+- `zsh`
+- `powershell`
+- `cmd`
 
-* **arguments**: (optional) List of arguments used in commands.
-* **execute**: List of commands for execution.
-# Usage
+### Description of configuration parameters:
 
-Run uki from the command line to execute commands:
+- **default-enviroment** - specifies the default shell for all presets. If not specified, the system-installed shell will be used for the preset.
+  
+- **default-preset** - specifies the preset that will be run if the first argument (preset name) was not passed when `uki` was called.
 
-```sh
-uki
-```
-By default, the **default** preset will be executed.
+- **presets** - mandatory section where all presets are described. Each preset can contain the following parameters:
+  - **enviroment** - the shell in which the commands of this preset will be executed.
+  - **description** - description of the preset to make it clear what it does.
+  - **arguments** - list of arguments that can be passed to the preset.
+  - **commands** - list of commands that will be executed when the preset is started. Arguments passed through the CLI can be used in commands using the `${arg}` syntax.
 
-To run other presets, specify their name and arguments:
+### Example of preset usage:
 
-```sh
-uki test "Hello, world" George
-```
-In this example:
-
-* **"Hello, world"** is the argument for test.
-* **George** is the argument for my_name.
-
-## Default command
-uki also has default commands:
-* **make**: creates necessary files/folders for uki in current workspace
-* **list**: prints config details with preset list
-
-```sh
-uki make
-uki list
+```yaml
+presets:
+  example:
+    enviroment: zsh
+    description: "Example of preset"
+    arguments:
+      - name: message
+        default: "Hello, world!"
+    commands:
+      - echo "${message}"
 ```
 
-# Contributing
-We welcome contributors! To contribute, create a pull request in the repository. Please ensure that your code adheres to good coding standards and is tested.
+If you execute the command:
 
-# License
-uki is distributed under the GNU GPL v3.0 license. \
-Details can be found in the [LICENSE](LICENSE) file.
+```bash
+uki example “What's up”
+```
+
+Then **uki** will start the `example` preset by passing the ``“What's up”`` argument to the command, and execute the ``echo “What's up”`` command in the `zsh` shell.
+
+## Building
+
+To build **uki**, follow these steps:
+
+```bash
+git clone https://github.com/smokingplaya/uki
+cargo build --release
+cd target/release
+```
+
+## Support and Contributions
+We are always open to improvements! If you have ideas, comments, or fixes, feel free to open a pull request.
