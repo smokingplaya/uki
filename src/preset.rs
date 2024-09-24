@@ -97,7 +97,7 @@ impl Preset {
     Command::new(env)
       .arg(prefix)
       .arg(self.prepare_commands(cli_arguments).join(";"))
-      .spawn()?;
+      .status()?;
 
     Ok(())
   }
