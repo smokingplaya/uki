@@ -5,15 +5,10 @@
 
 ## Installing
 * Linux
-  - Debian-based:
   ```bash
-  # updating dependencies
-  sudo apt update && sudo apt upgrade
-  wget https://github.com/smokingplaya/uki/releases/latest/download/uki-linux_x86 -O uki
-  sudo mv uki /usr/local/bin
-  chmod +x /usr/local/bin/uki
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smokingplaya/uki/HEAD/misc/install.sh)"
   ```
-* Windows (powershell w/ admin rights)
+* Windows (powershell with admin rights)
   ```powershell
   & {Invoke-WebRequest -Uri "https://raw.githubusercontent.com/smokingplaya/uki/refs/heads/master/misc/windows.ps1" -OutFile "$env:USERPROFILE\Downloads\install_uki.ps1"; & "$env:USERPROFILE\Downloads\install_uki.ps1"}
   ```
