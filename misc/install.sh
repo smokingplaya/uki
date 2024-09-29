@@ -9,7 +9,7 @@ fi
 URL="https://github.com/smokingplaya/uki/releases/latest/download/uki-linux_x86"
 OUTPUT="uki"
 
-curl -o $OUTPUT $URL
+curl -L $URL -o $OUTPUT
 chmod +x $OUTPUT
 sudo mv $OUTPUT /usr/local/bin
 echo "The file was successfully moved to /usr/local/bin"
