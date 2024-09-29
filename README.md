@@ -16,7 +16,7 @@
 ## Using
 
 ```bash
-uki <preset> <аргументы>
+uki <preset> <arguments>
 ```
 
 - **preset** is the name of the preset (a set of pre-prepared commands) to be run. If you do not specify a preset, the `default` preset will be used by default.
