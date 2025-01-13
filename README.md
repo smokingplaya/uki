@@ -44,14 +44,14 @@ For **uki** to work, there must be a YAML configuration file called `.uki` in th
 ### Example of `.uki` file structure:
 
 ```yaml
-default-enviroment: bash # Default shell for all presets (optional)
+default-shell: bash # Default shell for all presets (optional)
 default-preset: default # Default preset if not specified (optional)
 
 # Presets section (required)
 presets:
   # Preset name
   default:
-    enviroment: bash        # Shell override for a specific preset (optional)
+    shell: bash        # Shell override for a specific preset (optional)
     description: "Пресет, который ничего не делает"  # Preset description (optional)
     arguments:
       - name: arg1          # Name of the argument
@@ -69,12 +69,12 @@ presets:
 
 ### Description of configuration parameters:
 
-- **default-enviroment** - specifies the default shell for all presets. If not specified, the system-installed shell will be used for the preset.
+- **default-shell** - specifies the default shell for all presets. If not specified, the system-installed shell will be used for the preset.
   
 - **default-preset** - specifies the preset that will be run if the first argument (preset name) was not passed when `uki` was called.
 
 - **presets** - mandatory section where all presets are described. Each preset can contain the following parameters:
-  - **enviroment** - the shell in which the commands of this preset will be executed.
+  - **shell** - the shell in which the commands of this preset will be executed.
   - **description** - description of the preset to make it clear what it does.
   - **arguments** - list of arguments that can be passed to the preset.
   - **commands** - list of commands that will be executed when the preset is started. Arguments passed through the CLI can be used in commands using the `${arg}` syntax.
@@ -84,7 +84,7 @@ presets:
 ```yaml
 presets:
   example:
-    enviroment: zsh
+    shell: zsh
     description: "Example of preset"
     arguments:
       - name: message

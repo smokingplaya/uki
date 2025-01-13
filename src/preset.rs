@@ -4,7 +4,7 @@ use crate::argument::Argument;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub(crate) struct Preset {
-  enviroment: Option<String>,
+  shell: Option<String>,
   description: Option<String>,
   arguments: Option<Vec<Argument>>,
   commands: Vec<String>
@@ -14,11 +14,11 @@ impl Preset {
   /**
    * execute
    * * Synchronized preset execution
-   * @param enviroment Execution shell
+   *    @param enviroment Execution shell
    */
   pub fn get_run_argument(
     &self,
-    enviroment: &String
+    enviroment: &str
   ) -> anyhow::Result<&str> {
     match enviroment.to_lowercase().as_str() {
       "powershell" => Ok("-Command"),
@@ -40,13 +40,15 @@ impl Preset {
     let preset_arguments = self.arguments.as_ref().unwrap();
     let mut result = HashMap::new();
 
-    preset_arguments.iter().enumerate().for_each(|(i, arg)| {
-      let value = cli_arguments.get(i)
-        .cloned()
-        .unwrap_or_else(|| arg.default.clone().unwrap_or_default());
+    preset_arguments.iter()
+      .enumerate()
+      .for_each(|(i, arg)| {
+        let value = cli_arguments.get(i)
+          .cloned()
+          .unwrap_or_else(|| arg.default.clone().unwrap_or_default());
 
-      result.insert(arg.name.clone(), value);
-    });
+        result.insert(arg.name.clone(), value);
+      });
 
     result
   }
@@ -88,9 +90,11 @@ impl Preset {
     cli_arguments: Vec<String>,
     enviroment: &Option<String>
   ) -> anyhow::Result<()> {
-    let env = self.enviroment.clone().or_else(|| enviroment.clone()).ok_or_else(|| {
-      anyhow::anyhow!("No environment for preset {} was found!", name)
-    })?;
+    let env = self.shell.clone()
+      .or_else(|| enviroment.clone())
+      .ok_or_else(|| {
+        anyhow::anyhow!("No environment for preset {name} was found!")
+      })?;
 
     let prefix = self.get_run_argument(&env)?;
 

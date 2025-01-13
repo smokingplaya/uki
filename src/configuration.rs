@@ -2,14 +2,14 @@ use crate::preset::Preset;
 use std::{collections::HashMap, env, fs::File, io::BufReader};
 use serde::{Deserialize, Serialize};
 
-const CONFIGURATION_FILE: &'static str = ".uki";
+const CONFIGURATION_FILE: &str = "uki.yml";
 
 #[derive(Serialize, Deserialize, Debug)]
 pub(crate) struct Configuration {
   #[serde(rename = "default-preset")]
   default_preset: Option<String>,
-  #[serde(rename = "default-enviroment")]
-  default_enviroment: Option<String>,
+  #[serde(rename = "default-shell")]
+  default_shell: Option<String>,
   presets: HashMap<String, Preset>
 }
 
@@ -40,7 +40,7 @@ impl Configuration {
   /**
    * run_preset
    * * Starts execution of the preset
-   * @param preset Name of preset
+   *    @param preset Name of preset
    */
   pub fn run_preset(
     &self,
@@ -56,7 +56,7 @@ impl Configuration {
       .execute(
         &preset_name,
         cli_arguments,
-        &self.default_enviroment
+        &self.default_shell
       )?;
 
     Ok(())
