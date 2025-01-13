@@ -39,9 +39,9 @@ uki <preset> <arguments>
 
 ## Configuration
 
-For **uki** to work, there must be a YAML configuration file called `.uki` in the current directory.
+For **uki** to work, there must be a YAML configuration file called `uki.yml` in the current directory.
 
-### Example of `.uki` file structure:
+### Example of `uki.yml` file structure:
 
 ```yaml
 default-shell: bash # Default shell for all presets (optional)
